@@ -9,15 +9,18 @@ public class SpeedControls : MonoBehaviour
     public Button S;
     public Button N;
     public Button F;
+    public Button Stop;
     public float speed_rate = 1;
     void Start()
     {
-        S.GetComponent<Image>().color = Color.yellow;
-        N.GetComponent<Image>().color = Color.green;
+        S.GetComponent<Image>().color = Color.green;
+        N.GetComponent<Image>().color = Color.yellow;
         F.GetComponent<Image>().color = Color.red;
+        //Stop.GetComponent<Image>.color = Color.cyan;
         S.onClick.AddListener(setSlowSpeed);
         N.onClick.AddListener(setNormalSpeed);
         F.onClick.AddListener(setFastSpeed);
+        Stop.onClick.AddListener(setStopSpeed);
     }
 
     void setSlowSpeed()
@@ -36,6 +39,10 @@ public class SpeedControls : MonoBehaviour
     {
         speed_rate = 2;
        
+    }
+    void setStopSpeed()
+    {
+        speed_rate = 0;
     }
     void Update()
     {

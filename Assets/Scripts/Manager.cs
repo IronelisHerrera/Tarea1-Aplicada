@@ -15,6 +15,7 @@ public class Manager : MonoBehaviour
     public bool cross_left_right;
     public float s;
     public float s_lower;
+    public float stop_speed;
     public ArrayList coins_collided_togueder = new ArrayList();
 
     void Start()
@@ -127,6 +128,7 @@ public class Manager : MonoBehaviour
         while (true)
         {
             s = (10 / GameObject.Find("Canvas").GetComponent<SpeedControls>().speed_rate);
+            stop_speed = (GameObject.Find("Canvas").GetComponent<SpeedControls>().speed_rate);
             trfl_up_down_green();
             yield return new WaitForSeconds(s);
 
@@ -139,14 +141,31 @@ public class Manager : MonoBehaviour
 
             trfl_left_right_yellow();
             yield return new WaitForSeconds(s_lower);
+            
+            if (GameObject.Find("Canvas").GetComponent<SpeedControls>().Stop)
+            {
+                trfl_up_down_green();
+                yield return new WaitForSeconds(1*stop_speed);
+
+                trfl_up_down_yellow();
+                yield return new WaitForSeconds(1*stop_speed);
+
+                trfl_left_right_green();
+                yield return new WaitForSeconds(1*stop_speed);
+
+
+                trfl_left_right_yellow();
+                yield return new WaitForSeconds(1*stop_speed);
+            }
         }
+        
     }
 
     IEnumerator move_coins_again()
     {
         while (coins_collided_togueder.Count > 0)
         {
-            GameObject coins = coins_collided_togueder[0] as GameObject; //
+            GameObject coins = coins_collided_togueder[0] as GameObject;
             coins.GetComponent<Coin>().move = true;
             coins.GetComponent<Coin>().wall = null;
             coins_collided_togueder.Remove(coins);
@@ -168,5 +187,6 @@ public class Manager : MonoBehaviour
     {
          s = (10 / GameObject.Find("Canvas").GetComponent<SpeedControls>().speed_rate);
          s_lower = (7 / GameObject.Find("Canvas").GetComponent<SpeedControls>().speed_rate);
+         stop_speed = (GameObject.Find("Canvas").GetComponent<SpeedControls>().speed_rate);
     }
 }
